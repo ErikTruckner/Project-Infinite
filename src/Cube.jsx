@@ -1,21 +1,26 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
+import { useControls } from 'leva'
 
-const Cube = ({ position, color }) => {
-  const mesh = useRef()
+const Cube = () => {
+  // const mesh = useRef()
 
-  useFrame(() => {
-    if (mesh.current) {
-      mesh.current.rotation.x += 0.01
-      mesh.current.rotation.y += 0.01
-    }
+  // useFrame(() => {
+  //   if (mesh.current) {
+  //     mesh.current.rotation.x += 0.01
+  //     mesh.current.rotation.y += 0.01
+  //   }
+  // })
+
+  const { position } = useControls({
+    position: -2,
   })
 
   return (
-    <mesh ref={mesh} position={position}>
-      <boxBufferGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={color} />
+    <mesh position-x={position}>
+      <boxBufferGeometry />
+      <meshStandardMaterial />
     </mesh>
   )
 }
