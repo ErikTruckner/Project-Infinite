@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import { Perf } from 'r3f-perf'
 import Cube from './Cube'
 import Lights from './Lights'
 
@@ -10,6 +11,7 @@ export default function App() {
   return (
     <>
       <Canvas>
+        <Perf />
         <OrbitControls />
         <Lights />
         <Cube />
