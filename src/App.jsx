@@ -15,9 +15,13 @@ export default function App() {
         <OrbitControls />
         <Physics>
           <Debug />
+<<<<<<< HEAD
           <spotLight castShadow position={[5, 5, -14]} intensity={0.8} />
           {/* <spotLight castShadow position={[5, 5, 14]} intensity={0.8} /> */}
 
+=======
+          <Lights />
+>>>>>>> origin/main
           <Level />
         </Physics>
       </Canvas>
