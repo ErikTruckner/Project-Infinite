@@ -22,7 +22,7 @@ const BlockStart = ({ position = [0, 0, 0] }) => {
         material={floor1Material}
         position={[0, -0.1, 0]}
         scale={[4, 0.2, 4]}
-        receiveShadow
+        // receiveShadow
       />
     </group>
   )
@@ -47,7 +47,7 @@ const BlockEnd = ({ position = [0, 0, 0] }) => {
         material={floor1Material}
         position={[0, 0, 0]}
         scale={[4, 0.2, 4]}
-        receiveShadow
+        // receiveShadow
       />
       <RigidBody
         type='fixed'
@@ -91,7 +91,7 @@ const BlockSpinner = ({ position = [0, 0, 0] }) => {
         material={floor2Material}
         position={[0, -0.1, 0]}
         scale={[4, 0.2, 4]}
-        receiveShadow
+        // receiveShadow
       />
       {/* OBSTACLE SPINNER*/}
       <RigidBody
@@ -105,8 +105,8 @@ const BlockSpinner = ({ position = [0, 0, 0] }) => {
           material={obstacleMaterial}
           // position={[0, -0.1, 0]}
           scale={[3.5, 0.3, 0.4]}
-          castShadow
-          receiveShadow
+          // castShadow
+          // receiveShadow
         />
       </RigidBody>
     </group>
@@ -140,7 +140,7 @@ const BlockLimbo = ({ position = [0, 0, 0] }) => {
         material={floor2Material}
         position={[0, -0.1, 0]}
         scale={[4, 0.2, 4]}
-        receiveShadow
+        // receiveShadow
       />
       {/* OBSTACLE */}
       <RigidBody
@@ -154,8 +154,8 @@ const BlockLimbo = ({ position = [0, 0, 0] }) => {
           material={obstacleMaterial}
           // position={[0, -0.1, 0]}
           scale={[3.5, 0.3, 0.4]}
-          castShadow
-          receiveShadow
+          // castShadow
+          // receiveShadow
         />
       </RigidBody>
     </group>
@@ -189,7 +189,7 @@ const BlockAxe = ({ position = [0, 0, 0] }) => {
         material={floor2Material}
         position={[0, -0.1, 0]}
         scale={[4, 0.2, 4]}
-        receiveShadow
+        // receiveShadow
       />
       {/* OBSTACLE */}
       <RigidBody
@@ -203,8 +203,8 @@ const BlockAxe = ({ position = [0, 0, 0] }) => {
           material={obstacleMaterial}
           // position={[0, -0.1, 0]}
           scale={[1.5, 1.5, 0.3]}
-          castShadow
-          receiveShadow
+          // castShadow
+          // receiveShadow
         />
       </RigidBody>
     </group>
@@ -212,16 +212,10 @@ const BlockAxe = ({ position = [0, 0, 0] }) => {
 }
 
 const Level = () => {
-  // const { position } = useControls({
-  //   position: {
-  //     value: { x: 0, y: 0 },
-  //     step: 0.01,
-  //   },
-  // })
-
+  // TO BUILD PROCEDURALLY
   return (
     <>
-      {/* POSITION OF THE ENTIRE GROUP */}
+      {/* POSITION OF THE ENTIRE GROUP = mesh + rigid */}
       <BlockStart position={[0, 0, 8]} />
       <BlockSpinner position={[0, 0, 4]} />
       <BlockSpinner position={[0, 0, 0]} />
@@ -231,5 +225,19 @@ const Level = () => {
     </>
   )
 }
+
+// TO BUILD MANUALLY
+//   return (
+//     <>
+//       {/* POSITION OF THE ENTIRE GROUP = mesh + rigid */}
+//       <BlockStart position={[0, 0, 8]} />
+//       <BlockSpinner position={[0, 0, 4]} />
+//       <BlockSpinner position={[0, 0, 0]} />
+//       <BlockLimbo position={[0, 0, -4]} />
+//       <BlockAxe position={[0, 0, -8]} />
+//       <BlockEnd position={[0, 0, -12]} />
+//     </>
+//   )
+// }
 
 export default Level
