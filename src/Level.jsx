@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { RigidBody } from '@react-three/rapier'
-import { useState, useRef } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
@@ -13,7 +13,7 @@ const floor2Material = new THREE.MeshStandardMaterial({ color: 'greenyellow' })
 const obstacleMaterial = new THREE.MeshStandardMaterial({ color: 'orangered' })
 const wallMaterial = new THREE.MeshStandardMaterial({ color: 'slategrey' })
 
-const BlockStart = ({ position = [0, 0, 0] }) => {
+export const BlockStart = ({ position = [0, 0, 0] }) => {
   return (
     <group position={position}>
       {/* FLOOR */}
@@ -27,7 +27,7 @@ const BlockStart = ({ position = [0, 0, 0] }) => {
     </group>
   )
 }
-const BlockEnd = ({ position = [0, 0, 0] }) => {
+export const BlockEnd = ({ position = [0, 0, 0] }) => {
   const goblet = useGLTF('./goblet.glb')
 
   // Shadows Code, not working, not necessary either, but eventually get it to work
@@ -61,7 +61,7 @@ const BlockEnd = ({ position = [0, 0, 0] }) => {
   )
 }
 
-const BlockSpinner = ({ position = [0, 0, 0] }) => {
+export const BlockSpinner = ({ position = [0, 0, 0] }) => {
   const obstacle = useRef()
   // ***SPEED OF SPIN FOR OBSTACLE***
   const [speed] = useState(
@@ -113,7 +113,7 @@ const BlockSpinner = ({ position = [0, 0, 0] }) => {
   )
 }
 
-const BlockLimbo = ({ position = [0, 0, 0] }) => {
+export const BlockLimbo = ({ position = [0, 0, 0] }) => {
   const obstacle = useRef()
   // ***START TIME STAGGER FOR OBSTACLE***
   const [timeOffset] = useState(() => Math.random() * Math.PI * 2)
@@ -161,7 +161,7 @@ const BlockLimbo = ({ position = [0, 0, 0] }) => {
     </group>
   )
 }
-const BlockAxe = ({ position = [0, 0, 0] }) => {
+export const BlockAxe = ({ position = [0, 0, 0] }) => {
   const obstacle = useRef()
   // ***START TIME STAGGER FOR OBSTACLE***
   const [timeOffset] = useState(() => Math.random() * Math.PI * 2)
@@ -211,22 +211,39 @@ const BlockAxe = ({ position = [0, 0, 0] }) => {
   )
 }
 
-const Level = () => {
-  // TO BUILD PROCEDURALLY
+export const Level = ({
+  count = 5,
+  types = [BlockSpinner, BlockLimbo, BlockAxe],
+}) => {
+  const blocks = useMemo(() => {
+    const blocks = []
+    for (let i = 0; i < count; i++) {
+      const type = types[Math.floor(Math.random() * types.length)]
+      blocks.push(type)
+    }
+    return blocks
+  }, [count, types])
+
+  console.log(blocks)
+  // ****TO BUILD PROCEDURALLY****
+
   return (
     <>
       {/* POSITION OF THE ENTIRE GROUP = mesh + rigid */}
-      <BlockStart position={[0, 0, 8]} />
-      <BlockSpinner position={[0, 0, 4]} />
-      <BlockSpinner position={[0, 0, 0]} />
-      <BlockLimbo position={[0, 0, -4]} />
-      <BlockAxe position={[0, 0, -8]} />
-      <BlockEnd position={[0, 0, -12]} />
+      <BlockStart position={[0, 0, 0]} />
+      {blocks.map((Block, index) => (
+        // *** MULTIPLY INDEX by 4 bc that gives up the proper seperation of floor tiles.
+        // THE MINUS in front of index is so the blocks are laid out in the negative Z axis, better for our camera setup
+        // PARENTHISEES around index with the +1 add the StartBlock to the starting location
+        <Block key={index} position={[0, 0, -(index + 1) * 4]} />
+      ))}
     </>
   )
 }
 
-// TO BUILD MANUALLY
+// *****TO BUILD MANUALLY*****
+
+// const Level = () => {
 //   return (
 //     <>
 //       {/* POSITION OF THE ENTIRE GROUP = mesh + rigid */}

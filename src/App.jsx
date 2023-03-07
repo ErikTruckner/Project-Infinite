@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Physics, Debug } from '@react-three/rapier'
-import Level from './Level'
+import { BlockAxe, Level } from './Level'
 
 export default function App() {
   console.log(Canvas)
