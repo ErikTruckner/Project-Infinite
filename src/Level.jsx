@@ -212,7 +212,7 @@ export const BlockAxe = ({ position = [0, 0, 0] }) => {
 }
 
 export const Level = ({
-  count = 5,
+  count = 15,
   types = [BlockSpinner, BlockLimbo, BlockAxe],
 }) => {
   const blocks = useMemo(() => {
@@ -227,8 +227,16 @@ export const Level = ({
   console.log(blocks)
   // ****TO BUILD PROCEDURALLY****
 
+  // // THESE useRefs are specifically for light helpers
+  // const directionalLight = useRef
+  // const spotLight = useRef()
+  // // the ending number is for size
+  // useHelper(spotLight, THREE.SpotLightHelper, 1)
+
   return (
     <>
+      <spotLight position={[5, 5, 14]} intensity={0.8} />
+      <spotLight position={[5, 5, -64]} intensity={0.8} />
       {/* POSITION OF THE ENTIRE GROUP = mesh + rigid */}
       <BlockStart position={[0, 0, 0]} />
       {blocks.map((Block, index) => (
