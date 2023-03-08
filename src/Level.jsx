@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { RigidBody } from '@react-three/rapier'
+import { CuboidCollider, RigidBody } from '@react-three/rapier'
 import { useMemo, useState, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
@@ -212,7 +212,7 @@ export const BlockAxe = ({ position = [0, 0, 0] }) => {
 }
 
 export const Level = ({
-  count = 15,
+  count = 5,
   types = [BlockSpinner, BlockLimbo, BlockAxe],
 }) => {
   const blocks = useMemo(() => {
@@ -224,8 +224,41 @@ export const Level = ({
     return blocks
   }, [count, types])
 
-  console.log(blocks)
-  // ****TO BUILD PROCEDURALLY****
+  function Bounds({ length = 1 }) {
+    return (
+      <>
+        <RigidBody type='fixed' restitution={0.2} friction={0}>
+          {/* Camera Right Wall */}
+          <mesh
+            position={[2.15, 0.75, -(length * 2) + 2]}
+            geometry={boxGeometry}
+            material={wallMaterial}
+            scale={[0.3, 1.5, 4 * length]}
+          />
+          {/* Camera Left Wall */}
+          <mesh
+            position={[-2.15, 0.75, -(length * 2) + 2]}
+            geometry={boxGeometry}
+            material={wallMaterial}
+            scale={[0.3, 1.5, 4 * length]}
+          />
+          {/* Camera Back Wall */}
+          <mesh
+            position={[0, 0.75, -(length * 4) + 2]}
+            geometry={boxGeometry}
+            material={wallMaterial}
+            scale={[4, 1.5, 0.3]}
+          />
+          <CuboidCollider
+            args={[2, 0.1, 2 * length]}
+            position={[0, -0.1 - length * 2 + 2]}
+            restitution={0.2}
+            friction={1}
+          />
+        </RigidBody>
+      </>
+    )
+  }
 
   // // THESE useRefs are specifically for light helpers
   // const directionalLight = useRef
@@ -245,6 +278,10 @@ export const Level = ({
         // PARENTHISEES around index with the +1 add the StartBlock to the starting location
         <Block key={index} position={[0, 0, -(index + 1) * 4]} />
       ))}
+      {/*Count is in reference to the count of blocks, the +1 insures it will always spawn at the end of the count. 
+      the  * 4  is a multiplier for the Z axis to maintain a proper position at the end of the array of floor tiles */}
+      <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+      <Bounds length={count + 2} />
     </>
   )
 }
