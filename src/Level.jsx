@@ -249,6 +249,7 @@ export const Level = ({
             material={wallMaterial}
             scale={[4, 1.5, 0.3]}
           />
+          {/* GROUND PHYSICS BOX */}
           <CuboidCollider
             args={[2, 0.1, 2 * length]}
             position={[0, -0.1 - length * 2 + 2]}
